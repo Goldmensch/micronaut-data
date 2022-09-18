@@ -15,6 +15,7 @@
  */
 package io.micronaut.data.tck.entities;
 
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.data.annotation.AutoPopulated;
 import io.micronaut.data.annotation.GeneratedValue;
 import io.micronaut.data.annotation.Id;
@@ -30,6 +31,9 @@ public class UuidEntity {
     @AutoPopulated
     @Id
     private UUID uuid;
+
+    @Nullable
+    private UUID nullableUUID;
 
     @ManyToOne
     @MappedProperty
@@ -70,5 +74,14 @@ public class UuidEntity {
 
     public void setEmbeddedChild(UuidEmbeddedChildEntity embeddedChild) {
         this.embeddedChild = embeddedChild;
+    }
+
+    @Nullable
+    public UUID getNullableUUID() {
+        return nullableUUID;
+    }
+
+    public void setNullableUUID(@Nullable UUID nullableUUID) {
+        this.nullableUUID = nullableUUID;
     }
 }

@@ -15,6 +15,7 @@
  */
 package io.micronaut.data.tck.repositories;
 
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.data.repository.CrudRepository;
 import io.micronaut.data.tck.entities.UuidEntity;
 
@@ -23,5 +24,7 @@ import java.util.UUID;
 public interface UuidRepository extends CrudRepository<UuidEntity, UUID> {
 
     UUID findUuidByName(String name);
+
+    UuidEntity findByNullableUUID(@Nullable UUID uuid);
 
 }

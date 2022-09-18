@@ -60,6 +60,35 @@ abstract class AbstractUUIDSpec extends Specification {
             uuidRepository.deleteAll()
     }
 
+    void 'test null uuid'() {
+        when:
+        def testEntity = new UuidEntity("Fred")
+        testEntity.nullableUUID = null
+        def test = uuidRepository.save(testEntity)
+        then:
+        test.nullableUUID == null
+
+        when:
+        test = uuidRepository.findById(test.uuid).get()
+        then:
+        test.nullableUUID == null
+
+        when:
+        test = uuidRepository.findByNullableUUID(null)
+        then:
+        test.nullableUUID == null
+
+        when:
+        testEntity = new UuidEntity("Fred")
+        testEntity.nullableUUID = UUID.randomUUID()
+        test = uuidRepository.save(testEntity)
+        test = uuidRepository.findByNullableUUID(test.nullableUUID)
+        then:
+        test.nullableUUID == test.nullableUUID
+
+        cleanup:
+        uuidRepository.deleteAll()
+    }
 
     void 'test insert and return uuid'() {
         when:
@@ -71,7 +100,6 @@ abstract class AbstractUUIDSpec extends Specification {
 
         when:
             test = uuidRepository.findUuidByName("Fred")
-
         then:
             test != null
             test == uuid
